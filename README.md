@@ -12,9 +12,9 @@
 5. [運算子](Python/005_運算子.md)
 
 ### 流程控制
-6. [條件判斷基礎](Python/006_條件判斷基礎.md)
-7. [while迴圈基礎](Python/007_while迴圈基礎.md)
-8. [while迴圈進階](Python/008_while迴圈進階.md)
+6. [if-else條件判斷](Python/006_if-else條件判斷.md)
+7. [if-elif-else多重條件](Python/007_if-elif-else多重條件.md)
+8. [while迴圈基礎](Python/008_while迴圈基礎.md)
 9. [for迴圈基礎](Python/009_for迴圈基礎.md)
 10. [break與continue](Python/010_break與continue.md)
 11. [pass與else子句](Python/011_pass與else子句.md)
@@ -29,10 +29,10 @@
 18. [元組基礎](Python/018_元組基礎.md)
 19. [集合基礎](Python/019_集合基礎.md)
 20. [字典基礎](Python/020_字典基礎.md)
+21. [字典進階操作](Python/021_字典進階操作.md)
 
 ### 函式
-21. [函式基礎](Python/021_函式基礎.md)
-22. [函式參數](Python/022_函式參數.md)
+22. [函式基礎](Python/022_函式基礎.md)
 23. [函式進階操作](Python/023_函式進階操作.md)
 24. [遞迴函式](Python/024_遞迴函式.md)
 25. [模組基礎](Python/025_模組基礎.md)
@@ -65,7 +65,7 @@
 46. [GUI程式設計基礎](Python/046_GUI程式設計基礎.md)
 47. [GUI程式設計進階](Python/047_GUI程式設計進階.md)
 48. [單元測試基礎](Python/048_單元測試基礎.md)
-49. [單元測試進階](Python/049_單元測試進階.md)
+49. [進階單元測試](Python/049_進階單元測試.md)
 50. [專案實踐](Python/050_專案實踐.md)
 
 ### 數據科學與人工智能
@@ -81,6 +81,62 @@
 58. [自動化運維](Python/058_自動化運維.md)
 59. [雲端部署與服務](Python/059_雲端部署與服務.md)
 60. [Python性能優化](Python/060_Python性能優化.md)
+
+### 高級主題
+61. [設計模式基礎](Python/061_設計模式基礎.md)
+62. [設計模式進階](Python/062_設計模式進階.md)
+63. [函數式編程](Python/063_函數式編程.md)
+64. [元編程基礎](Python/064_元編程基礎.md)
+65. [元編程進階](Python/065_元編程進階.md)
+
+### 網絡編程
+66. [Socket編程基礎](Python/066_Socket編程基礎.md)
+67. [Socket編程進階](Python/067_Socket編程進階.md)
+68. [異步IO編程](Python/068_異步IO編程.md)
+69. [網絡協議實現](Python/069_網絡協議實現.md)
+70. [分布式系統基礎](Python/070_分布式系統基礎.md)
+
+### Web開發
+71. [Flask框架基礎](Python/071_Flask框架基礎.md)
+72. [Flask框架進階](Python/072_Flask框架進階.md)
+73. [Django框架基礎](Python/073_Django框架基礎.md)
+74. [Django框架進階](Python/074_Django框架進階.md)
+75. [FastAPI框架入門](Python/075_FastAPI框架入門.md)
+
+### 數據庫進階
+76. [ORM設計模式](Python/076_ORM設計模式.md)
+77. [數據庫優化](Python/077_數據庫優化.md)
+78. [NoSQL數據庫](Python/078_NoSQL數據庫.md)
+79. [數據倉儲基礎](Python/079_數據倉儲基礎.md)
+80. [數據遷移與備份](Python/080_數據遷移與備份.md)
+
+### 安全與加密
+81. [密碼學基礎](Python/081_密碼學基礎.md)
+82. [安全編程實踐](Python/082_安全編程實踐.md)
+83. [Web安全基礎](Python/083_Web安全基礎.md)
+84. [身份認證與授權](Python/084_身份認證與授權.md)
+85. [安全測試與審計](Python/085_安全測試與審計.md)
+
+### 系統與工具
+86. [系統編程基礎](Python/086_系統編程基礎.md)
+87. [進程間通信](Python/087_進程間通信.md)
+88. [系統監控與日誌](Python/088_系統監控與日誌.md)
+89. [容器化技術](Python/089_容器化技術.md)
+90. [自動化部署](Python/090_自動化部署.md)
+
+### 項目管理與開發
+91. [代碼質量控制](Python/091_代碼質量控制.md)
+92. [持續集成與部署](Python/092_持續集成與部署.md)
+93. [項目文檔編寫](Python/093_項目文檔編寫.md)
+94. [開源項目維護](Python/094_開源項目維護.md)
+95. [技術團隊管理](Python/095_技術團隊管理.md)
+
+### 前沿技術
+96. [量子計算基礎](Python/096_量子計算基礎.md)
+97. [區塊鏈開發](Python/097_區塊鏈開發.md)
+98. [邊緣計算應用](Python/098_邊緣計算應用.md)
+99. [物聯網開發](Python/099_物聯網開發.md)
+100. [元宇宙技術](Python/100_元宇宙技術.md)
 
 ## 特色 ✨
 
