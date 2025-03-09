@@ -161,18 +161,23 @@ class User(models.Model):
 <!DOCTYPE html>
 <html>
 <head>
+    {% raw %}
     <title>{% block title %}My Django App{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endraw %}
 </head>
 <body>
     <nav>
+        {% raw %}
         <a href="{% url 'index' %}">Home</a>
         <a href="{% url 'user_list' %}">Users</a>
+        {% endraw %}
     </nav>
     
     <main>
+        {% raw %}
         {% block content %}
-        {% endblock %}
+        {% endraw %}
     </main>
     
     <footer>
@@ -182,6 +187,7 @@ class User(models.Model):
 </html>
 
 <!-- myapp/templates/myapp/index.html -->
+{% raw %}
 {% extends 'myapp/base.html' %}
 
 {% block title %}Home{% endblock %}
@@ -190,8 +196,10 @@ class User(models.Model):
 <h1>Welcome to My Django App</h1>
 <p>This is the home page.</p>
 {% endblock %}
+{% endraw %}
 
 <!-- myapp/templates/myapp/user_list.html -->
+{% raw %}
 {% extends 'myapp/base.html' %}
 
 {% block title %}Users{% endblock %}
@@ -207,8 +215,10 @@ class User(models.Model):
     {% endfor %}
 </ul>
 {% endblock %}
+{% endraw %}
 
 <!-- myapp/templates/myapp/user_detail.html -->
+{% raw %}
 {% extends 'myapp/base.html' %}
 
 {% block title %}{{ user.name }}{% endblock %}
@@ -219,6 +229,7 @@ class User(models.Model):
 <p>Created: {{ user.created_at }}</p>
 <p>Updated: {{ user.updated_at }}</p>
 {% endblock %}
+{% endraw %}
 ```
 
 ## 練習題

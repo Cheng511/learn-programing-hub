@@ -11,6 +11,8 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import User
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 class UserListView(ListView):
     """用戶列表視圖"""
@@ -26,6 +28,13 @@ class UserListView(ListView):
         if search:
             queryset = queryset.filter(name__icontains=search)
         return queryset
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
+class UserListView(ListView):
+    """緩存的用戶列表視圖"""
+    model = User
+    template_name = 'myapp/user_list.html'
+    context_object_name = 'users'
 
 class UserDetailView(DetailView):
     """用戶詳情視圖"""
@@ -272,4 +281,59 @@ class User(models.Model):
    - 優化關鍵路徑
    - 監控應用狀態
 
-[上一章：Django框架基礎](092_Django框架基礎.md) | [下一章：數據分析基礎](094_數據分析基礎.md) 
+[上一章：Django框架基礎](092_Django框架基礎.md) | [下一章：數據分析基礎](094_數據分析基礎.md)
+
+{% raw %}
+<!-- myapp/templates/myapp/base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Django App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'user_list' %}">Users</a>
+    </nav>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 My Django App</p>
+    </footer>
+</body>
+</html>
+
+<!-- myapp/templates/myapp/user_list.html -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<h1>Users</h1>
+<ul>
+    {% for user in users %}
+    <li>
+        <a href="{% url 'user_detail' user.id %}">{{ user.name }}</a>
+        <span>{{ user.email }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+<!-- myapp/templates/myapp/user_detail.html -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ user.name }}</h1>
+<p>Email: {{ user.email }}</p>
+<p>Created: {{ user.created_at }}</p>
+<p>Updated: {{ user.updated_at }}</p>
+{% endblock %}
+{% endraw %} 
