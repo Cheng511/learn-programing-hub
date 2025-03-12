@@ -236,47 +236,95 @@
 
         @media (max-width: 1400px) {
             .language-columns {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 1000px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .language-columns {
-                grid-template-columns: 1fr;
-                padding: 20px;
-                gap: 25px;
-                max-width: 600px;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                padding: 30px;
             }
 
             .language-column {
-                padding: 30px;
-                min-height: 300px;
                 min-width: unset;
             }
         }
 
-        @media (max-width: 600px) {
-            .language-columns {
+        @media (max-width: 900px) {
+            .container {
                 padding: 15px;
-                gap: 20px;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
             }
 
             .language-column {
                 padding: 25px;
-                min-height: 280px;
+                min-height: 250px;
             }
 
             .language-intro {
-                font-size: 1em;
-                line-height: 1.6;
-                margin-bottom: 25px;
+                font-size: 0.95em;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .language-badges {
+                gap: 10px;
+            }
+
+            .badge {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .language-column {
+                padding: 20px;
+                min-height: 220px;
+            }
+
+            .language-intro {
+                font-size: 0.9em;
+                margin-bottom: 15px;
             }
 
             .course-link {
-                padding: 12px 0;
-                font-size: 1em;
+                font-size: 0.95em;
             }
+        }
+
+        /* 新增滾動條樣式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
         }
     </style>
 </head>

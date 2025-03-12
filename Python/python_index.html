@@ -58,50 +58,59 @@
         }
 
         .nav-toggle {
-            display: none;
+            display: block;
             background: none;
             border: none;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: transform 0.3s ease;
         }
 
         nav {
             position: fixed;
             top: var(--header-height);
-            left: 0;
+            left: -var(--nav-width);
             height: calc(100vh - var(--header-height));
             width: var(--nav-width);
             background: white;
             padding: 1rem;
             overflow-y: auto;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, left 0.3s ease;
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             z-index: 999;
         }
 
+        nav.active {
+            transform: translateX(var(--nav-width));
+        }
+
         .main-content {
-            margin-left: var(--nav-width);
+            margin-left: 0;
             margin-top: var(--header-height);
             padding: 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
+            transition: margin-left 0.3s ease;
+            width: 100%;
+        }
+
+        .main-content.nav-open {
+            margin-left: var(--nav-width);
         }
 
         /* 響應式設計 */
         @media (max-width: 768px) {
-            .nav-toggle {
-                display: block;
-            }
-
-            nav {
-                transform: translateX(-100%);
+            .main-content.nav-open {
+                margin-left: 0;
+                opacity: 0.7;
             }
 
             nav.active {
-                transform: translateX(0);
+                transform: translateX(var(--nav-width));
+                box-shadow: 2px 0 8px rgba(0,0,0,0.2);
             }
 
             .main-content {
@@ -255,21 +264,39 @@
         #back-to-top.visible {
             opacity: 1;
         }
+
+        /* 添加遮罩層 */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1>🐍 Python 程式設計教學</h1>
             <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <h1>🐍 Python 程式設計教學</h1>
         </div>
     </header>
+
+    <div class="overlay"></div>
 
     <nav>
         <h2>📚 課程目錄</h2>
         <ul>
             <li><a href="#basic">🌟 基礎入門</a></li>
-            <li><a href="#data-structures">�� 資料結構與演算法</a></li>
+            <li><a href="#data-structures">🔄 資料結構與演算法</a></li>
             <li><a href="#oop">🎯 物件導向程式設計</a></li>
             <li><a href="#network">🌐 網路程式設計</a></li>
             <li><a href="#data-analysis">📊 資料處理與分析</a></li>
@@ -628,34 +655,41 @@
     <div id="back-to-top" title="回到頂部">↑</div>
 
     <script>
-        // 導航欄切換功能
+        // 更新導航欄切換功能
         const navToggle = document.querySelector('.nav-toggle');
         const nav = document.querySelector('nav');
+        const mainContent = document.querySelector('.main-content');
+        const overlay = document.querySelector('.overlay');
         
         navToggle.addEventListener('click', () => {
             nav.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            mainContent.classList.toggle('nav-open');
+            overlay.classList.toggle('active');
         });
 
-        // 點擊導航項目時自動關閉導航欄（在移動設備上）
+        // 點擊遮罩層關閉導航欄
+        overlay.addEventListener('click', () => {
+            nav.classList.remove('active');
+            navToggle.classList.remove('active');
+            mainContent.classList.remove('nav-open');
+            overlay.classList.remove('active');
+        });
+
+        // 點擊導航項目時自動關閉導航欄
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    nav.classList.remove('active');
-                }
-            });
-        });
-
-        // 點擊主內容區域時關閉導航欄
-        document.querySelector('.main-content').addEventListener('click', () => {
-            if (window.innerWidth <= 768 && nav.classList.contains('active')) {
                 nav.classList.remove('active');
-            }
+                navToggle.classList.remove('active');
+                mainContent.classList.remove('nav-open');
+                overlay.classList.remove('active');
+            });
         });
 
         // 監聽視窗大小變化
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768) {
-                nav.classList.remove('active');
+                mainContent.classList.remove('nav-open');
             }
         });
 
