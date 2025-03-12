@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 程式設計教學</title>
+    <style>
+        :root {
+            --primary-color: #3776AB;
+            --secondary-color: #FFD43B;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --link-color: #2b5b84;
+            --hover-color: #1a365d;
+            --nav-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', '微軟正黑體', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            width: var(--nav-width);
+            position: sticky;
+            top: 4rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0.5rem 0;
+        }
+
+        nav a {
+            color: var(--link-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            align-content: start;
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--link-color);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .course-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .course-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .course-list li {
+            margin: 0.25rem 0;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .course-list li:hover {
+            background-color: #f0f0f0;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--hover-color);
+        }
+
+        .emoji {
+            margin-right: 0.25rem;
+        }
+
+        .tips {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 0.75rem;
+            margin: 0.75rem 0;
+            font-size: 0.9rem;
+        }
+
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 0.75rem 0;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            nav {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-bottom: 1rem;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🐍 Python 程式設計教學</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <h2>📚 課程目錄</h2>
+            <ul>
+                <li><a href="#basic">🌟 基礎入門</a></li>
+                <li><a href="#data-structures">🔄 資料結構與演算法</a></li>
+                <li><a href="#oop">🎯 物件導向程式設計</a></li>
+                <li><a href="#network">🌐 網路程式設計</a></li>
+                <li><a href="#data-analysis">📊 資料處理與分析</a></li>
+                <li><a href="#automation">🤖 自動化與工具開發</a></li>
+                <li><a href="#advanced">🔄 進階程式設計</a></li>
+                <li><a href="#network-comm">🌐 網路與通訊</a></li>
+                <li><a href="#security">🔒 資訊安全</a></li>
+                <li><a href="#performance">🔧 效能與測試</a></li>
+                <li><a href="#web-dev">🌐 Web開發</a></li>
+                <li><a href="#data-science">📊 數據科學與分析</a></li>
+                <li><a href="#ai-ml">🤖 AI與深度學習</a></li>
+                <li><a href="#database">🗄️ 數據庫與存儲</a></li>
+                <li><a href="#cloud">🚀 雲端與微服務</a></li>
+                <li><a href="#devops">🔄 DevOps與系統架構</a></li>
+                <li><a href="#edge">🌐 邊緣計算與IoT</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <section id="basic" class="course-section">
+                <h3>🌟 基礎入門</h3>
+                <ul class="course-list">
+                    <li><a href="001_welcome_to_python.md">001 歡迎來到Python世界</a></li>
+                    <li><a href="002_install_python.md">002 安裝Python</a></li>
+                    <li><a href="003_basic_syntax.md">003 基本語法</a></li>
+                    <li><a href="004_variables_and_data_types.md">004 變數與資料型態</a></li>
+                    <li><a href="005_operators.md">005 運算子</a></li>
+                    <li><a href="006_control_flow.md">006 流程控制</a></li>
+                    <li><a href="007_functions.md">007 函數基礎</a></li>
+                    <li><a href="008_modules.md">008 模組與套件</a></li>
+                    <li><a href="009_exceptions.md">009 例外處理</a></li>
+                    <li><a href="010_file_io.md">010 檔案輸入輸出</a></li>
+                </ul>
+            </section>
+
+            <section id="data-structures" class="course-section">
+                <h3>🔄 資料結構與演算法</h3>
+                <ul class="course-list">
+                    <li><a href="011_lists.md">011 列表操作</a></li>
+                    <li><a href="012_tuples.md">012 元組運用</a></li>
+                    <li><a href="013_dictionaries.md">013 字典應用</a></li>
+                    <li><a href="014_sets.md">014 集合運算</a></li>
+                    <li><a href="015_strings.md">015 字串處理</a></li>
+                    <li><a href="016_basic_algorithms.md">016 基礎演算法</a></li>
+                    <li><a href="017_sorting.md">017 排序算法</a></li>
+                    <li><a href="018_searching.md">018 搜尋算法</a></li>
+                    <li><a href="019_recursion.md">019 遞迴概念</a></li>
+                    <li><a href="020_data_structures.md">020 進階資料結構</a></li>
+                </ul>
+            </section>
+
+            <section id="oop" class="course-section">
+                <h3>🎯 物件導向程式設計</h3>
+                <ul class="course-list">
+                    <li><a href="021_oop_basics.md">021 物件導向基礎</a></li>
+                    <li><a href="022_classes_objects.md">022 類別與物件</a></li>
+                    <li><a href="023_inheritance.md">023 繼承與多型</a></li>
+                    <li><a href="024_encapsulation.md">024 封裝與存取</a></li>
+                    <li><a href="025_polymorphism.md">025 多型應用</a></li>
+                    <li><a href="026_abstract_classes.md">026 抽象類別</a></li>
+                    <li><a href="027_interfaces.md">027 介面設計</a></li>
+                    <li><a href="028_design_patterns.md">028 設計模式入門</a></li>
+                    <li><a href="029_solid_principles.md">029 SOLID原則</a></li>
+                    <li><a href="030_clean_code.md">030 程式碼品質</a></li>
+                </ul>
+            </section>
+
+            <section id="network" class="course-section">
+                <h3>🌐 網路程式設計</h3>
+                <ul class="course-list">
+                    <li><a href="031_networking_basics.md">031 網路基礎</a></li>
+                    <li><a href="032_http_basics.md">032 HTTP協議</a></li>
+                    <li><a href="033_requests.md">033 Requests套件</a></li>
+                    <li><a href="034_apis.md">034 API串接</a></li>
+                    <li><a href="035_web_scraping.md">035 網頁爬蟲入門</a></li>
+                    <li><a href="036_json_xml.md">036 JSON與XML處理</a></li>
+                    <li><a href="037_rest_api.md">037 RESTful API</a></li>
+                    <li><a href="038_websockets.md">038 WebSocket應用</a></li>
+                    <li><a href="039_async_io.md">039 非同步IO</a></li>
+                    <li><a href="040_network_security.md">040 網路安全基礎</a></li>
+                </ul>
+            </section>
+
+            <section id="data-analysis" class="course-section">
+                <h3>📊 資料處理與分析</h3>
+                <ul class="course-list">
+                    <li><a href="041_pandas_basics.md">041 Pandas基礎</a></li>
+                    <li><a href="042_numpy_basics.md">042 NumPy基礎</a></li>
+                    <li><a href="043_data_visualization.md">043 資料視覺化</a></li>
+                    <li><a href="044_matplotlib.md">044 Matplotlib應用</a></li>
+                    <li><a href="045_seaborn.md">045 Seaborn應用</a></li>
+                    <li><a href="046_data_cleaning.md">046 資料清理</a></li>
+                    <li><a href="047_data_analysis.md">047 資料分析方法</a></li>
+                    <li><a href="048_statistics.md">048 統計分析</a></li>
+                    <li><a href="049_data_mining.md">049 資料探勘</a></li>
+                    <li><a href="050_big_data.md">050 大數據處理</a></li>
+                </ul>
+            </section>
+
+            <section id="automation" class="course-section">
+                <h3>🤖 自動化與工具開發</h3>
+                <ul class="course-list">
+                    <li><a href="051_automation_basics.md">051 自動化基礎</a></li>
+                    <li><a href="052_scripting.md">052 腳本編寫</a></li>
+                    <li><a href="053_task_scheduling.md">053 任務排程</a></li>
+                    <li><a href="054_gui_automation.md">054 GUI自動化</a></li>
+                    <li><a href="055_browser_automation.md">055 瀏覽器自動化</a></li>
+                    <li><a href="056_網頁爬蟲基礎.md">056 網頁爬蟲基礎</a></li>
+                    <li><a href="057_進階網頁爬蟲.md">057 進階網頁爬蟲</a></li>
+                    <li><a href="058_自動化運維.md">058 自動化運維</a></li>
+                    <li><a href="059_雲端部署與服務.md">059 雲端部署與服務</a></li>
+                    <li><a href="060_Python性能優化.md">060 Python性能優化</a></li>
+                </ul>
+            </section>
+
+            <section id="advanced" class="course-section">
+                <h3>🔄 進階程式設計</h3>
+                <ul class="course-list">
+                    <li><a href="061_設計模式基礎.md">061 設計模式基礎</a></li>
+                    <li><a href="062_設計模式進階.md">062 設計模式進階</a></li>
+                    <li><a href="063_函數式編程.md">063 函數式編程</a></li>
+                    <li><a href="064_元編程基礎.md">064 元編程基礎</a></li>
+                    <li><a href="065_元編程進階.md">065 元編程進階</a></li>
+                </ul>
+            </section>
+
+            <section id="network-comm" class="course-section">
+                <h3>🌐 網路與通訊</h3>
+                <ul class="course-list">
+                    <li><a href="066_Socket編程基礎.md">066 Socket編程基礎</a></li>
+                    <li><a href="067_Socket編程進階.md">067 Socket編程進階</a></li>
+                    <li><a href="068_網絡協議基礎.md">068 網路協議基礎</a></li>
+                    <li><a href="069_網絡協議進階.md">069 網路協議進階</a></li>
+                    <li><a href="070_網絡安全基礎.md">070 網路安全基礎</a></li>
+                </ul>
+            </section>
+
+            <section id="security" class="course-section">
+                <h3>🔒 資訊安全</h3>
+                <ul class="course-list">
+                    <li><a href="071_網絡安全進階.md">071 網路安全進階</a></li>
+                    <li><a href="072_網絡攻防基礎.md">072 網路攻防基礎</a></li>
+                    <li><a href="073_網絡攻防進階.md">073 網路攻防進階</a></li>
+                    <li><a href="074_惡意軟件分析基礎.md">074 惡意軟體分析基礎</a></li>
+                    <li><a href="075_惡意軟件分析進階.md">075 惡意軟體分析進階</a></li>
+                    <li><a href="076_逆向工程基礎.md">076 逆向工程基礎</a></li>
+                    <li><a href="077_逆向工程進階.md">077 逆向工程進階</a></li>
+                </ul>
+            </section>
+
+            <section id="performance" class="course-section">
+                <h3>🔧 效能與測試</h3>
+                <ul class="course-list">
+                    <li><a href="078_軟件測試基礎.md">078 軟體測試基礎</a></li>
+                    <li><a href="079_軟件測試進階.md">079 軟體測試進階</a></li>
+                    <li><a href="080_性能優化基礎.md">080 效能優化基礎</a></li>
+                    <li><a href="081_性能優化進階.md">081 效能優化進階</a></li>
+                    <li><a href="082_並發編程基礎.md">082 並發編程基礎</a></li>
+                    <li><a href="083_並發編程進階.md">083 並發編程進階</a></li>
+                    <li><a href="084_進程編程基礎.md">084 進程編程基礎</a></li>
+                    <li><a href="085_進程編程進階.md">085 進程編程進階</a></li>
+                </ul>
+            </section>
+
+            <section id="web-dev" class="course-section">
+                <h3>🌐 Web開發</h3>
+                <ul class="course-list">
+                    <li><a href="086_網絡編程基礎.md">086 網路編程基礎</a></li>
+                    <li><a href="087_網絡編程進階.md">087 網路編程進階</a></li>
+                    <li><a href="088_數據庫編程基礎.md">088 數據庫編程基礎</a></li>
+                    <li><a href="089_數據庫編程進階.md">089 數據庫編程進階</a></li>
+                    <li><a href="090_Web開發基礎.md">090 Web開發基礎</a></li>
+                    <li><a href="091_Web開發進階.md">091 Web開發進階</a></li>
+                    <li><a href="092_Django框架基礎.md">092 Django框架基礎</a></li>
+                    <li><a href="093_Django框架進階.md">093 Django框架進階</a></li>
+                </ul>
+            </section>
+
+            <section id="data-science" class="course-section">
+                <h3>📊 數據科學與分析</h3>
+                <ul class="course-list">
+                    <li><a href="094_數據分析基礎.md">094 數據分析基礎</a></li>
+                    <li><a href="095_數據分析進階.md">095 數據分析進階</a></li>
+                    <li><a href="096_機器學習基礎.md">096 機器學習基礎</a></li>
+                    <li><a href="097_機器學習進階.md">097 機器學習進階</a></li>
+                    <li><a href="098_深度學習基礎.md">098 深度學習基礎</a></li>
+                    <li><a href="099_深度學習進階.md">099 深度學習進階</a></li>
+                    <li><a href="100_自然語言處理基礎.md">100 自然語言處理基礎</a></li>
+                </ul>
+            </section>
+
+            <section id="ai-ml" class="course-section">
+                <h3>🤖 AI與深度學習</h3>
+                <ul class="course-list">
+                    <li><a href="101_自然語言處理進階.md">101 自然語言處理進階</a></li>
+                    <li><a href="102_計算機視覺基礎.md">102 計算機視覺基礎</a></li>
+                    <li><a href="103_計算機視覺進階.md">103 計算機視覺進階</a></li>
+                    <li><a href="104_機器人基礎.md">104 機器人基礎</a></li>
+                    <li><a href="105_機器人進階.md">105 機器人進階</a></li>
+                    <li><a href="106_遊戲開發基礎.md">106 遊戲開發基礎</a></li>
+                    <li><a href="107_遊戲開發進階.md">107 遊戲開發進階</a></li>
+                    <li><a href="108_網絡編程基礎.md">108 網路編程基礎</a></li>
+                    <li><a href="109_網絡編程進階.md">109 網路編程進階</a></li>
+                    <li><a href="110_數據庫基礎.md">110 數據庫基礎</a></li>
+                </ul>
+            </section>
+
+            <section id="database" class="course-section">
+                <h3>🗄️ 數據庫與存儲</h3>
+                <ul class="course-list">
+                    <li><a href="111_數據庫進階.md">111 數據庫進階</a></li>
+                    <li><a href="112_數據庫優化.md">112 數據庫優化</a></li>
+                    <li><a href="113_數據庫分片與集群.md">113 數據庫分片與集群</a></li>
+                    <li><a href="114_NoSQL數據庫應用.md">114 NoSQL數據庫應用</a></li>
+                    <li><a href="115_大數據處理基礎.md">115 大數據處理基礎</a></li>
+                    <li><a href="116_分布式計算.md">116 分布式計算</a></li>
+                    <li><a href="117_雲端數據庫整合.md">117 雲端數據庫整合</a></li>
+                </ul>
+            </section>
+
+            <section id="ai-ml" class="course-section">
+                <h3>🤖 AI與深度學習</h3>
+                <ul class="course-list">
+                    <li><a href="118_機器學習部署.md">118 機器學習部署</a></li>
+                    <li><a href="119_AI模型優化.md">119 AI模型優化</a></li>
+                    <li><a href="120_端到端AI應用開發.md">120 端到端AI應用開發</a></li>
+                    <li><a href="121_強化學習實踐.md">121 強化學習實踐</a></li>
+                    <li><a href="122_生成對抗網絡應用.md">122 生成對抗網絡應用</a></li>
+                    <li><a href="123_圖神經網絡.md">123 圖神經網絡</a></li>
+                    <li><a href="124_聯邦學習基礎.md">124 聯邦學習基礎</a></li>
+                    <li><a href="125_AI安全與隱私.md">125 AI安全與隱私</a></li>
+                </ul>
+            </section>
+
+            <section id="cloud" class="course-section">
+                <h3>🚀 雲端與微服務</h3>
+                <ul class="course-list">
+                    <li><a href="126_微服務架構設計.md">126 微服務架構設計</a></li>
+                    <li><a href="127_服務網格應用.md">127 服務網格應用</a></li>
+                    <li><a href="128_事件驅動架構.md">128 事件驅動架構</a></li>
+                    <li><a href="129_大規模數據流處理.md">129 大規模數據流處理</a></li>
+                    <li><a href="130_系統可觀測性.md">130 系統可觀測性</a></li>
+                    <li><a href="131_雲端原生應用基礎.md">131 雲端原生應用基礎</a></li>
+                    <li><a href="132_容器化應用開發.md">132 容器化應用開發</a></li>
+                    <li><a href="133_Kubernetes應用部署.md">133 Kubernetes應用部署</a></li>
+                    <li><a href="134_雲原生存儲方案.md">134 雲原生存儲方案</a></li>
+                    <li><a href="135_雲原生安全實踐.md">135 雲原生安全實踐</a></li>
+                </ul>
+            </section>
+
+            <section id="devops" class="course-section">
+                <h3>🔄 DevOps與系統架構</h3>
+                <ul class="course-list">
+                    <li><a href="136_DevOps實踐基礎.md">136 DevOps實踐基礎</a></li>
+                    <li><a href="137_持續集成與部署.md">137 持續集成與部署</a></li>
+                    <li><a href="138_微服務架構設計.md">138 微服務架構設計</a></li>
+                    <li><a href="139_服務網格應用.md">139 服務網格應用</a></li>
+                    <li><a href="140_事件驅動架構.md">140 事件驅動架構</a></li>
+                    <li><a href="141_大規模數據流處理.md">141 大規模數據流處理</a></li>
+                    <li><a href="142_系統可觀測性.md">142 系統可觀測性</a></li>
+                    <li><a href="143_分布式系統設計.md">143 分布式系統設計</a></li>
+                    <li><a href="144_高可用架構設計.md">144 高可用架構設計</a></li>
+                    <li><a href="145_性能優化實踐.md">145 性能優化實踐</a></li>
+                    <li><a href="146_系統安全加固.md">146 系統安全加固</a></li>
+                    <li><a href="147_持續集成與部署.md">147 持續集成與部署</a></li>
+                </ul>
+            </section>
+
+            <section id="edge" class="course-section">
+                <h3>🌐 邊緣計算與IoT</h3>
+                <ul class="course-list">
+                    <li><a href="148_邊緣計算基礎.md">148 邊緣計算基礎</a></li>
+                    <li><a href="149_IoT設備編程.md">149 IoT設備編程</a></li>
+                    <li><a href="150_邊緣AI應用.md">150 邊緣AI應用</a></li>
+                </ul>
+            </section>
+
+            <section class="course-section">
+                <h2>📝 學習建議</h2>
+                <div class="tips">
+                    <ol>
+                        <li>按照課程順序逐步學習</li>
+                        <li>每個主題都包含理論講解和實作練習</li>
+                        <li>完成每個章節的練習題</li>
+                        <li>動手實作專案，鞏固所學知識</li>
+                        <li>遇到問題可以查看相關文件或尋求協助</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="course-section">
+                <h2>🔧 開發環境設置</h2>
+                <div class="resources">
+                    <div class="resource-card">
+                        <h4>必要軟體</h4>
+                        <ul>
+                            <li>Python 3.8+</li>
+                            <li>Visual Studio Code 或 PyCharm</li>
+                            <li>Git 版本控制</li>
+                            <li>虛擬環境管理工具 (venv/conda)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="course-section">
+                <h2>📚 推薦學習資源</h2>
+                <div class="resources">
+                    <div class="resource-card">
+                        <h4>官方資源</h4>
+                        <ul>
+                            <li><a href="https://docs.python.org/" target="_blank">Python 官方文件</a></li>
+                            <li><a href="https://www.python.org/about/gettingstarted/" target="_blank">Python 教學網站</a></li>
+                            <li><a href="https://pypi.org/" target="_blank">Python Package Index (PyPI)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="course-section">
+                <h2>🤝 取得協助</h2>
+                <div class="tips">
+                    <p>如果您在學習過程中遇到任何問題：</p>
+                    <ol>
+                        <li>查看相關章節的常見問題解答</li>
+                        <li>在 Issues 中提出問題</li>
+                        <li>參考線上資源和社群討論</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="course-section">
+                <h2>🔧 實用資源</h2>
+                <div class="resources">
+                    <div class="resource-card">
+                        <h4>開發環境</h4>
+                        <ul>
+                            <li>Python 3.8+</li>
+                            <li>VS Code/PyCharm</li>
+                            <li>Git</li>
+                            <li>venv/conda</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <h4>學習資源</h4>
+                        <ul>
+                            <li><a href="https://docs.python.org/">官方文件</a></li>
+                            <li><a href="https://www.python.org/about/gettingstarted/">教學網站</a></li>
+                            <li><a href="https://pypi.org/">PyPI</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="back-to-top" title="回到頂部">↑</div>
+
+    <script>
+        // Back to top button functionality
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

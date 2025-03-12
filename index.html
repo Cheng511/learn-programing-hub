@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>程式設計學習中心 | Programming Learning Hub</title>
+    <style>
+        :root {
+            --primary-color: #2b5b84;
+            --secondary-color: #ffd43b;
+            --accent-color: #3d7ab3;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --text-color: #2c3e50;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', '微軟正黑體', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .language-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px auto;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            gap: 6px;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .python-badge {
+            background-color: #3776AB;
+            color: white;
+        }
+
+        .java-badge {
+            background-color: #ED8B00;
+            color: white;
+        }
+
+        .javascript-badge {
+            background-color: #F7DF1E;
+            color: black;
+        }
+
+        .language-columns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 60px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .language-column {
+            background: var(--primary-color);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            min-height: 320px;
+            min-width: 380px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .language-column:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-column h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .language-intro {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .course-link {
+            display: block;
+            width: 100%;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            font-size: 1.1em;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .course-link:hover {
+            border-bottom-color: var(--secondary-color);
+            padding-left: 10px;
+        }
+
+        .course-link::after {
+            content: "→";
+            margin-left: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .course-link:hover::after {
+            transform: translateX(8px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            padding: 15px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .feature-card .emoji {
+            font-size: 2em;
+            margin-bottom: 12px;
+            display: inline-block;
+            padding: 12px;
+            background-color: white;
+            border-radius: 50%;
+            line-height: 1;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-color);
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 40px;
+        }
+
+        footer h3 {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1400px) {
+            .language-columns {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 1000px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .language-columns {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 25px;
+                max-width: 600px;
+            }
+
+            .language-column {
+                padding: 30px;
+                min-height: 300px;
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .language-columns {
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .language-column {
+                padding: 25px;
+                min-height: 280px;
+            }
+
+            .language-intro {
+                font-size: 1em;
+                line-height: 1.6;
+                margin-bottom: 25px;
+            }
+
+            .course-link {
+                padding: 12px 0;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>🌟 程式設計學習中心</h1>
+                <p>Programming Learning Hub</p>
+                <div class="language-badges">
+                    <a href="./Python/python_index.html" class="badge python-badge">
+                        <span>🐍</span> Python
+                    </a>
+                    <a href="./Java" class="badge java-badge">
+                        <span>☕</span> Java
+                    </a>
+                    <a href="./JavaScripts" class="badge javascript-badge">
+                        <span>💛</span> JavaScript
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="language-columns">
+        <div class="language-column">
+            <h3>🐍 Python</h3>
+            <p class="language-intro">Python 是一個優雅簡潔的程式語言，就像蛇一樣靈活有力！無論是資料分析、人工智慧還是網站開發，都能輕鬆駕馭。</p>
+            <a href="./Python/python_index.html" class="course-link">開始 Python 學習之旅 →</a>
+        </div>
+        <div class="language-column">
+            <h3>☕ Java (架構中)</h3>
+            <p class="language-intro">Java 是企業級應用的首選，穩定可靠如同一杯醇香的咖啡。從手機 App 到大型系統，處處都有它的身影。</p>
+            <a href="./Java" class="course-link">開始 Java 學習之旅 →</a>
+        </div>
+        <div class="language-column">
+            <h3>💛 JavaScript (架構中)</h3>
+            <p class="language-intro">JavaScript 是網頁互動的靈魂，充滿創意與活力。讓我們一起探索如何打造精彩的網頁體驗！</p>
+            <a href="./JavaScripts" class="course-link">開始 JavaScript 學習之旅 →</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="features">
+            <div class="feature-card">
+                <div class="emoji">📝</div>
+                <h3>循序漸進的課程安排</h3>
+                <p>根據學習難度和邏輯順序精心編排的課程內容，讓您輕鬆掌握每個概念。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">💻</div>
+                <h3>豐富的實作範例</h3>
+                <p>每個主題都配備完整的程式碼示例，幫助您快速理解並應用所學知識。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">🔍</div>
+                <h3>深入淺出的概念解釋</h3>
+                <p>以簡單易懂的方式解釋複雜的程式設計概念，讓學習更輕鬆有效。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">✨</div>
+                <h3>現代化的程式設計概念</h3>
+                <p>涵蓋最新的程式設計趨勢和技術，確保您掌握業界實用的知識。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">🌐</div>
+                <h3>完整的中文教學內容</h3>
+                <p>全中文的學習資源，消除語言障礙，讓您專注於程式設計的學習。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">📚</div>
+                <h3>系統化的學習路徑</h3>
+                <p>從基礎到進階，每個主題都經過精心規劃，確保學習路徑清晰明確。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">🔬</div>
+                <h3>實用的專案實作</h3>
+                <p>大量實用的程式範例和專案實作，幫助您將理論知識轉化為實際技能。</p>
+            </div>
+            <div class="feature-card">
+                <div class="emoji">🎯</div>
+                <h3>清晰的概念講解</h3>
+                <p>運用生動的比喻和實例，讓複雜的程式概念變得容易理解。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h3>開始您的程式設計之旅吧！🚀</h3>
+            <p>本教學內容採用 MIT 授權條款。您可以自由使用、修改和分享，但請註明出處。</p>
+        </div>
+    </footer>
+</body>
+</html> 
