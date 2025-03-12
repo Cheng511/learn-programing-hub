@@ -12,8 +12,9 @@
             --bg-color: #f8f9fa;
             --link-color: #2b5b84;
             --hover-color: #1a365d;
-            --nav-width: 250px;
+            --nav-width: 280px;
             --header-height: 60px;
+            --transition-speed: 0.3s;
         }
 
         * {
@@ -58,26 +59,37 @@
         }
 
         .nav-toggle {
-            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--header-height);
+            height: var(--header-height);
             background: none;
             border: none;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem;
-            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .nav-toggle.active {
+            transform: rotate(90deg);
         }
 
         nav {
             position: fixed;
             top: var(--header-height);
-            left: -var(--nav-width);
-            height: calc(100vh - var(--header-height));
+            left: calc(-1 * var(--nav-width));
             width: var(--nav-width);
+            height: calc(100vh - var(--header-height));
             background: white;
             padding: 1rem;
             overflow-y: auto;
-            transition: transform 0.3s ease, left 0.3s ease;
+            transition: transform var(--transition-speed) ease;
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             z-index: 999;
         }
@@ -88,52 +100,53 @@
 
         .main-content {
             margin-left: 0;
-            margin-top: var(--header-height);
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            transition: margin-left 0.3s ease;
-            width: 100%;
+            transition: margin-left var(--transition-speed) ease, opacity var(--transition-speed) ease;
+            padding: 1rem;
+            padding-top: calc(var(--header-height) + 1rem);
         }
 
         .main-content.nav-open {
             margin-left: var(--nav-width);
         }
 
-        /* 響應式設計 */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .main-content.nav-open {
                 margin-left: 0;
                 opacity: 0.7;
             }
 
-            nav.active {
-                transform: translateX(var(--nav-width));
+            nav {
                 box-shadow: 2px 0 8px rgba(0,0,0,0.2);
             }
 
-            .main-content {
-                margin-left: 0;
-                grid-template-columns: 1fr;
-                padding: 1rem;
-            }
-
-            .course-section {
-                margin-bottom: 1rem;
+            .nav-toggle {
+                width: 50px;
             }
         }
 
-        /* 平板設備優化 */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* 導航欄樣式 */
+        /* 更新導航列樣式 */
         nav ul {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         nav li {
@@ -141,17 +154,24 @@
         }
 
         nav a {
-            color: var(--link-color);
-            text-decoration: none;
             display: block;
             padding: 0.5rem;
+            color: var(--link-color);
+            text-decoration: none;
             border-radius: 4px;
-            transition: background-color 0.3s;
+            transition: all 0.2s ease;
         }
 
         nav a:hover {
             background-color: var(--bg-color);
             color: var(--hover-color);
+            padding-left: 1rem;
+        }
+
+        nav h2 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
         }
 
         h1 {
@@ -263,22 +283,6 @@
 
         #back-to-top.visible {
             opacity: 1;
-        }
-
-        /* 添加遮罩層 */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
-        }
-
-        .overlay.active {
-            display: block;
         }
     </style>
 </head>
@@ -661,34 +665,35 @@
         const mainContent = document.querySelector('.main-content');
         const overlay = document.querySelector('.overlay');
         
-        navToggle.addEventListener('click', () => {
+        function toggleNav() {
             nav.classList.toggle('active');
             navToggle.classList.toggle('active');
             mainContent.classList.toggle('nav-open');
             overlay.classList.toggle('active');
-        });
+        }
+
+        // 切換導航欄
+        navToggle.addEventListener('click', toggleNav);
 
         // 點擊遮罩層關閉導航欄
-        overlay.addEventListener('click', () => {
-            nav.classList.remove('active');
-            navToggle.classList.remove('active');
-            mainContent.classList.remove('nav-open');
-            overlay.classList.remove('active');
-        });
+        overlay.addEventListener('click', toggleNav);
 
         // 點擊導航項目時自動關閉導航欄
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
-                nav.classList.remove('active');
-                navToggle.classList.remove('active');
-                mainContent.classList.remove('nav-open');
-                overlay.classList.remove('active');
+                toggleNav();
+                // 平滑滾動到目標位置
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
         // 監聽視窗大小變化
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > 768 && nav.classList.contains('active')) {
                 mainContent.classList.remove('nav-open');
             }
         });
@@ -706,16 +711,6 @@
 
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
         });
     </script>
 </body>
