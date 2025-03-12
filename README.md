@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](./python/python_README.md)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](./Python/python_README.md)
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](./Java)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](./JavaScripts)
 
@@ -14,14 +14,14 @@
 
 ## 📚 學習路徑
 
-### 🐍 [Python 程式設計](./python/python_README.md)
+### 🐍 [Python 程式設計](./Python/python_README.md)
 > Python 是一個易學易用的程式語言，適合初學者入門，同時也被廣泛應用於資料科學、人工智慧、網站開發等領域。
 - 基礎語法與概念
 - 資料結構與演算法
 - 物件導向程式設計
 - Web 開發與框架
 - 資料科學與人工智慧
-- [查看完整課程](./python/python_README.md)
+- [查看完整課程](./Python/python_README.md)
 
 ### ☕ [Java 程式設計](./Java)
 > Java 是一個強大的物件導向程式語言，被廣泛應用於企業級應用開發、Android 開發等領域。
@@ -75,6 +75,6 @@
 
 ### 開始您的程式設計之旅吧！ 🚀
 
-[Python](./python/python_README.md) | [Java](./Java) | [JavaScript](./JavaScripts)
+[Python](./Python/python_README.md) | [Java](./Java) | [JavaScript](./JavaScripts)
 
 </div> 
